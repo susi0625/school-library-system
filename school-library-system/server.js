@@ -32,23 +32,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-app.get("/setup-users", async (req, res) => {
-  try {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        personal_code VARCHAR(10) UNIQUE NOT NULL,
-        role VARCHAR(20) DEFAULT 'user',
-        max_books INTEGER DEFAULT 3
-      );
-    `);
 
-    res.send("users table created");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("error");
-  }
-});
 app.get("/add-test-users", async (req, res) => {
   try {
     await pool.query(`
