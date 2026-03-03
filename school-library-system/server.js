@@ -49,3 +49,19 @@ app.get("/setup-users", async (req, res) => {
     res.status(500).send("error");
   }
 });
+app.get("/add-test-users", async (req, res) => {
+  try {
+    await pool.query(`
+      INSERT INTO users (personal_code, role)
+      VALUES 
+      ('1315', 'user'),
+      ('0000', 'admin')
+      ON CONFLICT (personal_code) DO NOTHING;
+    `);
+
+    res.send("test users added");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("error");
+  }
+});
